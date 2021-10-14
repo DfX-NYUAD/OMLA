@@ -7,6 +7,7 @@ L. Alrahis, S. Patnaik, M. Shafique and O. Sinanoglu, "OMLA: An Oracle-less Mach
 [IEEE Link](https://ieeexplore.ieee.org/document/9539868) 
 
 **Contact**
+
 Lilas Alrahis (lma387@nyu.edu)
 ## Citation
 If you make use of the code/experiment or OMLA algorithm in your work, please cite our paper (Bibtex below).
