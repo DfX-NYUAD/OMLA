@@ -20,8 +20,17 @@ If you make use of the code/experiment or OMLA algorithm in your work, please ci
   pages={1-1},
   doi={10.1109/TCSII.2021.3113035}}
 ```
-### Overview 
+## Overview 
 OMLA is an oracle-less attack on traditional logic locking which maps the problem of resolving the key-bit value to subgraph classification. OMLA extracts a small subgraph for each key-gate from the locked netlist. The enclosing subgraphs capture the characteristics associated with the key-bit values of the key-gates. Therefore, the label of a subgraph can also be considered the key-bit value.
 
 ![OMLA Concept](./OMLA.png)
+
+## Requirement
+Install PyTorch following the instuctions on the [official website] (https://pytorch.org/).
+Then install the other dependencies (tqdm, numpy, and networkx)
+
+## Acknowledgement
+OMLA utilizes the graph isomorphism network (GIN) GNN architecture from the following paper:
+Keyulu Xu, Weihua Hu, Jure Leskovec and Stefanie Jegelka, "How Powerful are Graph Neural Networks?", *ICLR*, 2019. 
+We owe many thanks to the authors for making their GIN code available.
 
