@@ -53,6 +53,7 @@ The following scripts are required for the conversion:
 The corresponding graph dataset will be dumped under ./data
 ## Subgraph Classification
 To train the GIN network on the generated dataset:
+
     ```sh
     $ python Main.py --split-val --use-dis --file-name c3540 --links-name link.txt  --batch_size 64  --filename Release_c3540_result_b64_h2_fan_6layers_hd64.txt  --hidden_dim 64 --num_layers 6 > Release_log_c3540_b64_h2_6layers_hd64.txt
     ```
