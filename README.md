@@ -29,6 +29,19 @@ OMLA is an oracle-less attack on traditional logic locking which maps the proble
 Install PyTorch following the instuctions on the [official website] (https://pytorch.org/).
 Then install the other dependencies (tqdm, numpy, and networkx)
 
+## Netlist-to-subgraphs Conversion
+### Datasets
+The `./circuit_datasets/` directory contain an example dataset for the `c3540` benchmark. The dataset is implemented using the self-referencing scenario explained in the TCAS-II paper. The target `c3540` circuit is locked using random logic locking with K=64 and then re-synthesized using `Synopsys Design Compiler`. The target circuit is named `Test_c3540_syn_locked_rnd_64_1_syn.v`. The training/validation circuits are obtained by re-locking the test circuit with additional 64 key-bits and re-synthesizing.
+When creating a dataset, the files used for training, validation, or testing must be identified. To split files into Test/Train/Validate, the files must be named accordingly. A locked file must be named as follows: [Test|Train|Validate]_*.v
+
+### Conversion to Graphs
+**Scripts**  
+The following scripts are required for the conversion:  
+`./TheCircuit.pm`: a Perl module we create to ease circuit's parsing. This module is required by our parser ``
+
+`./netlist_to_subgraphs.pl` perl script reads the circuit dataset and converts the circuits into a single graph. The script also identifies the key-gates and the corresponding key-bit values, which will be used to train/test the GNN-based attack model. The circuits are expected to follow the Nangate 45nm Open Cell Library format. The script assigns unique numerical IDs (0 to N-1) to the nodes (gates). N represents the total number of nodes (gates) in the dataset. The list of nodes corresponding to the key-gates with a key-bit value of `0` in the training set will be dumped in `node_tr_pos.txt`, and the key-gates with a key-bit value of `1` will be dumped in `node_tr_neg.txt`. The list of key-gates in the testing set with a key-bit value of `0` will be dumped in `node_te_pos.txt`, while the ones with a key-bit value of `1` will be dumped in `node_te_neg.txt`. Same applies for the validation set. The extracted features will be dumped in `feat.txt`. The existence of an edge i between two vertices u and v is represented by the entry of ith line in `link.txt` (representing u's and v's IDs).
+
+
 ## Acknowledgement
 OMLA utilizes the graph isomorphism network (GIN) GNN architecture from the following paper:
 Keyulu Xu, Weihua Hu, Jure Leskovec and Stefanie Jegelka, "How Powerful are Graph Neural Networks?", *ICLR*, 2019. 
