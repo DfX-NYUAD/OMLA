@@ -37,10 +37,25 @@ When creating a dataset, the files used for training, validation, or testing mus
 ### Conversion to Graphs
 **Scripts**  
 The following scripts are required for the conversion:  
-`./TheCircuit.pm`: a Perl module we create to ease circuit's parsing. This module is required by our parser ``
+`./TheCircuit.pm`: a Perl module we create to ease circuit's parsing. This module is required by our parser `netlist_to_subgraphs.pl`
 
 `./netlist_to_subgraphs.pl` perl script reads the circuit dataset and converts the circuits into a single graph. The script also identifies the key-gates and the corresponding key-bit values, which will be used to train/test the GNN-based attack model. The circuits are expected to follow the Nangate 45nm Open Cell Library format. The script assigns unique numerical IDs (0 to N-1) to the nodes (gates). N represents the total number of nodes (gates) in the dataset. The list of nodes corresponding to the key-gates with a key-bit value of `0` in the training set will be dumped in `node_tr_pos.txt`, and the key-gates with a key-bit value of `1` will be dumped in `node_tr_neg.txt`. The list of key-gates in the testing set with a key-bit value of `0` will be dumped in `node_te_pos.txt`, while the ones with a key-bit value of `1` will be dumped in `node_te_neg.txt`. Same applies for the validation set. The extracted features will be dumped in `feat.txt`. The existence of an edge i between two vertices u and v is represented by the entry of ith line in `link.txt` (representing u's and v's IDs).
 
+**Running the Conversion**   
+1) Modify line 7 in `./netlist_to_subgraphs.pl` and place the full path to `theCircuit.pm`.
+2) Perform the conversion:  
+    ```sh
+    $ cd ./circuit_datasets/
+    $ unzip c3540.zip
+    $ cd ../
+    $ perl netlist_to_subgraphs.pl -f c3540 -i ./circuit_datasets/c3540   > log_build_OMLA_c3540.txt
+    ```
+The corresponding graph dataset will be dumped under ./data
+## Subgraph Classification
+To train the GIN network on the generated dataset:
+    ```sh
+    $ python Main.py --split-val --use-dis --file-name c3540 --links-name link.txt  --batch_size 64  --filename Release_c3540_result_b64_h2_fan_6layers_hd64.txt  --hidden_dim 64 --num_layers 6 > Release_log_c3540_b64_h2_6layers_hd64.txt
+    ```
 
 ## Acknowledgement
 OMLA utilizes the graph isomorphism network (GIN) GNN architecture from the following paper:
