@@ -101,7 +101,6 @@ select( ( select(STDERR), $~ = "INFO_MSG" )[0] ), write STDERR;
 ###################################################
 
 my $status         = 0;
-my $filename_label = 'label.txt';
 my $filename_cell  = 'cell.txt';
 my $filename_count = "count.txt";
 $file_name_ = "./data/" . $file_name_;
@@ -114,7 +113,6 @@ open( FH_NODE_TR_NEG, '>', "${file_name_}/node_tr_neg.txt" ) or die $!;
 open( FH_NODE_VA_POS, '>', "${file_name_}/node_va_pos.txt" ) or die $!;
 open( FH_NODE_VA_NEG, '>', "${file_name_}/node_va_neg.txt" ) or die $!;
 open( FH_CELL,        '>', "${file_name_}/$filename_cell" )  or die $!;
-open( FH_LABEL,       '>', "${file_name_}/$filename_label" ) or die $!;
 open( FH_COUNT,       '>', "${file_name_}/$filename_count" ) or die $!;
 my $filename_feat = 'feat.txt';
 open( FH_FEAT, '>', "${file_name_}/$filename_feat" ) or die $!;
@@ -930,7 +928,6 @@ foreach my $input_file (@input_files) {
 
         print FH_CELL "$count $name from file $input_file\n";
         print FH_COUNT "$count\n";
-        print FH_LABEL "$label\n";
         my $size = @features_array;
         print FH_FEAT "@features_array\n";
     }    #end of the outer loop through the gates
@@ -939,7 +936,6 @@ close(FH_ROW);
 close(FH_FEAT);
 close(FH_CELL);
 close(FH_COUNT);
-close(FH_LABEL);
 close(FH_COL);
 close(FH_COL_TR);
 close(FH_ROW_TR);
