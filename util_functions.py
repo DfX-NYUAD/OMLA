@@ -51,11 +51,11 @@ def keygates2subgraphs(A,B, train_pos, train_neg, test_pos, test_neg, val_pos,va
     print(type(train_pos))
 
     if train_pos is not None and train_neg is not None  :
-        train_graphs = helper(A,B, train_pos, 1, DE_FLAG) + helper(A, B, train_neg, 0, DE_FLAG)
+        train_graphs = helper(A,B, train_pos, 0, DE_FLAG) + helper(A, B, train_neg, 1, DE_FLAG)
     if test_pos is not None and test_neg is not None:
-        test_graphs = helper(A, B, test_pos, 1, DE_FLAG) + helper(A, B, test_neg, 0, DE_FLAG)
+        test_graphs = helper(A, B, test_pos, 0, DE_FLAG) + helper(A, B, test_neg, 1, DE_FLAG)
     if val_pos is not None and  val_neg is not None:
-        val_graphs = helper(A, B, val_pos, 1, DE_FLAG) + helper(A, B, val_neg, 0, DE_FLAG)
+        val_graphs = helper(A, B, val_pos, 0, DE_FLAG) + helper(A, B, val_neg, 1, DE_FLAG)
     return train_graphs, test_graphs,val_graphs
 
 def parallel_worker(x):
