@@ -530,6 +530,10 @@ foreach my $input_file (@input_files) {
                     push @current_gate_inputs, $$hash_ref{"CI"};
 
                 }
+		if ( defined( $$hash_ref{"B3"} ) ) {
+                        push @current_gate_inputs, $$hash_ref{"B3"};
+
+                    }
 
                 if ( defined( $$hash_ref{"B2"} ) ) {
                     push @current_gate_inputs, $$hash_ref{"B2"};
