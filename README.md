@@ -58,6 +58,7 @@ To train the GIN network on the generated dataset:
 $ python Main.py --split-val --use-dis --file-name c3540 --links-name link.txt  --batch_size 64  --filename Release_c3540_result_b64_h2_fan_6layers_hd64.txt  --hidden_dim 64 --num_layers 6 > Release_log_c3540_b64_h2_6layers_hd64.txt
 ```
 **Training/Attacking Configuration**
+
 The `--use-dis` flag enables the distance encoding proposed in the TCAS-II paper. If this flag is not set, distance encoding will not be performed.
 
 The `--split-val` flag will combine the extracted subgraphs from the training and the validation circuits, randomly shuffle the subgraphs and select 10% for validation. If this flag is not set, the validation set will be obtained directly from the specified validation circuit. 
