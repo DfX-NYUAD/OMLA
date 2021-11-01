@@ -31,7 +31,7 @@ Then install the other dependencies (tqdm, numpy, and networkx)
 
 ## Netlist-to-subgraphs Conversion
 ### Datasets
-The `./circuit_datasets/` directory contain an example dataset for the `c3540` benchmark. The dataset is implemented using the self-referencing scenario explained in the TCAS-II paper. The target `c3540` circuit is locked using random logic locking with K=64 and then re-synthesized using `Synopsys Design Compiler`. The target circuit is named `Test_c3540_syn_locked_rnd_64_1_syn.v`. The training/validation circuits are obtained by re-locking the test circuit with additional 64 key-bits and re-synthesizing.
+The `./circuit_datasets/` directory contains an example dataset for the `c3540` benchmark. The dataset is implemented using the self-referencing scenario explained in the TCAS-II paper. The target `c3540` circuit is locked using random logic locking with K=64 and then re-synthesized using `Synopsys Design Compiler`. The target circuit is named `Test_c3540_syn_locked_rnd_64_1_syn.v`. The training/validation circuits are obtained by re-locking the test circuit with additional 64 key-bits and re-synthesizing.
 When creating a dataset, the files used for training, validation, or testing must be identified. To split files into Test/Train/Validate, the files must be named accordingly. A locked file must be named as follows: [Test|Train|Validate]_*.v
 
 ### Conversion to Graphs
@@ -55,8 +55,14 @@ The corresponding graph dataset will be dumped under ./data
 ## Subgraph Classification
 To train the GIN network on the generated dataset:
 ```sh
-$ python Main.py --split-val --use-dis --file-name c3540 --links-name link.txt  --batch_size 64  --filename Release_c3540_result_b64_h2_fan_6layers_hd64.txt  --  hidden_dim 64 --num_layers 6 > Release_log_c3540_b64_h2_6layers_hd64.txt
+$ python Main.py --split-val --use-dis --file-name c3540 --links-name link.txt  --batch_size 64  --filename Release_c3540_result_b64_h2_fan_6layers_hd64.txt  --hidden_dim 64 --num_layers 6 > Release_log_c3540_b64_h2_6layers_hd64.txt
 ```
+**Training/Attacking Configuration**
+The `--use-dis` flag enables the distance encoding proposed in the TCAS-II paper. If this flag is not set, distance encoding will not be performed.
+
+The `--split-val` flag will combine the extracted subgraphs from the training and the validation circuits, randomly shuffle the subgraphs and select 10% for validation. If this flag is not set, the validation set will be obtained directly from the specified validation circuit. 
+
+It is highly recommended that a grid search is used to find the optimal hyperparameters of OMLA for a specific dataset. The hyperparameters include the hidden dimension, number of layers, and batch size.
     
 ## Acknowledgement
 OMLA utilizes the graph isomorphism network (GIN) GNN architecture from the following paper:
