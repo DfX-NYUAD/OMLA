@@ -99,7 +99,6 @@ def test(args, model, device, train_graphs, test_graphs, epoch,val):
         print("accuracy train: %f test: %f" % (acc_train, acc_test))
         print("Precision Test is: "+str(prec_test))
     return acc_train, acc_test, loss_train, loss_test, prec_test, TP, FP, TN, FN
-a_list=[]
 parser = argparse.ArgumentParser(description='OMLA Attack')
 # general settings
 parser.add_argument('--file-name', default=None, help='dataset file name')
@@ -182,13 +181,8 @@ elif (len(train_pos)>len(train_neg)):
 print("Length of train neg is "+str(len(train_neg))+" and length of train positive is "+str(len(train_pos)))
 args.train_dir = os.path.join(args.file_dir, './data/{}/{}'.format(args.file_name, 'node_te_pos.txt'))
 test_pos = np.loadtxt(args.train_dir, dtype=int)
-test_idxx = np.loadtxt(args.train_dir, dtype=int)
-a_list.append(test_idxx)
 args.train_dir = os.path.join(args.file_dir, './data/{}/{}'.format(args.file_name, 'node_te_neg.txt'))
 test_neg = np.loadtxt(args.train_dir, dtype=int)
-test_idx2 = np.loadtxt(args.train_dir, dtype=int)
-a_list.append(test_idx2)
-test_idx=np.concatenate(a_list)
 args.train_dir = os.path.join(args.file_dir, './data/{}/{}'.format(args.file_name, 'node_va_pos.txt'))
 val_pos = np.loadtxt(args.train_dir, dtype=int)
 args.train_dir = os.path.join(args.file_dir, './data/{}/{}'.format(args.file_name, 'node_va_neg.txt'))
