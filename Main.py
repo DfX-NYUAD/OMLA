@@ -238,17 +238,17 @@ test_idx=np.concatenate(a_list)
 print("All done!")
 
 # build observed network
-if args.use_attribute: #
-    cell=[]
-    feat=[]
-    count=[]
-    feats_test = np.loadtxt('./data/{}/feat.txt'.format(args.file_name), dtype='float32')
-    count = np.loadtxt('./data/{}/count.txt'.format(args.file_name))
-    cell = np.genfromtxt('./data/{}/cell.txt'.format(args.file_name), dtype=str)
-    arr1inds = count.argsort()
-    sorted_count = count[arr1inds[0::]]
-    attributes = feats_test[arr1inds[0::]]
-    sorted_cell = cell[arr1inds[0::]]
+#if args.use_attribute: #
+cell=[]
+feat=[]
+count=[]
+feats_test = np.loadtxt('./data/{}/feat.txt'.format(args.file_name), dtype='float32')
+count = np.loadtxt('./data/{}/count.txt'.format(args.file_name))
+cell = np.genfromtxt('./data/{}/cell.txt'.format(args.file_name), dtype=str)
+arr1inds = count.argsort()
+sorted_count = count[arr1inds[0::]]
+attributes = feats_test[arr1inds[0::]]
+sorted_cell = cell[arr1inds[0::]]
 
 max_idx = np.max(links_idx)
 net = ssp.csc_matrix((np.ones(len(links_idx)), (links_idx[:, 0], links_idx[:, 1])), shape=(max_idx+1, max_idx+1) )
@@ -263,13 +263,13 @@ net[np.arange(max_idx+1), np.arange(max_idx+1)] = 0  # remove self-loops
 A = net.copy()  # the observed network
 A.eliminate_zeros()  # make sure the links are masked when using the sparse matrix in scipy-1.3.x
 
-node_information = None
+node_information = attributes
 
-if args.use_attribute and attributes is not None:
-    if node_information is not None:
-        node_information = np.concatenate([node_information, attributes], axis=1)
-    else:
-        node_information = attributes
+#if args.use_attribute and attributes is not None:
+#    if node_information is not None:
+#        node_information = np.concatenate([node_information, attributes], axis=1)
+#    else:
+#        node_information = attributes
 #Newly added option
 if args.only_predict:  
     print("Inside the only predict function")
